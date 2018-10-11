@@ -27,6 +27,7 @@ const addNumberToPlayField = (playField) => {
   };
 
   const freeCells = getFreeCells(playField);
+  if (freeCells.length === 0) return playField;
   const randomCellIndex = getRandomInt(freeCells.length);
   const randomCellI = freeCells[randomCellIndex][0];
   const randomCellJ = freeCells[randomCellIndex][1];
