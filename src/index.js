@@ -13,7 +13,7 @@ const blankField = [
 ];
 
 const map2DimArr = (array, fn) => array.map((curr, i) => (
-  curr.map((elem, j) => fn(elem, i, j))
+  curr.map((elem, j) => fn(elem, i, j, array))
 ));
 
 const getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
@@ -49,9 +49,23 @@ export const movePlayField = (playField) => {
 };
 
 export const isWin = (playField) => {
-
+  const has2048 = playField.reduce((acc, elem) => acc + (elem.includes(2048) ? 1 : 0), 0);
+  return has2048;
 };
 
-export const isEnd = (playField) => {
+export const isLoss = (playField) => {
+  const hasZeros = playField.reduce((acc, elem) => acc + (elem.includes(0) ? 1 : 0), 0);
+  if (hasZeros) return false;
 
+  const canMoveToLeftToUp = (elem, i, j, arr) => {
+    const canMoveAlongI = (i > 0) ? elem === arr[i - 1][j] : false;
+    const canMoveAlongJ = (j > 0) ? elem === arr[i][j - 1] : false;
+    return canMoveAlongI || canMoveAlongJ;
+  }
+  const isExistsMoves = map2DimArr(playField, canMoveToLeftToUp);
+
+  const hasSomeMove = isExistsMoves
+    .map(elem => elem.includes(true))
+    .includes(true);
+  return !hasSomeMove;
 };
