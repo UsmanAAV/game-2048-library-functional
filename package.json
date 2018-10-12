@@ -1,7 +1,7 @@
 {
-  "name": "zet-media-test-2048",
+  "name": "game-2048-functional",
   "version": "0.0.1",
-  "description": "my implementation of popular game \"2048\"",
+  "description": "A library based in a functional programming paradigm to creates a 2048 game.",
   "main": "dist/index.js",
   "scripts": {
     "test": "jest",
@@ -12,19 +12,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/UsmanAAV/zet-media-test.git"
+    "url": "git+https://github.com/UsmanAAV/game-2048-library-functional.git"
   },
   "keywords": [
     "javascript",
     "game",
-    "2048"
+    "2048",
+    "functional"
   ],
   "author": "Azamat Abdullin",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/UsmanAAV/zet-media-test/issues"
+    "url": "https://github.com/UsmanAAV/game-2048-library-functional/issues"
   },
-  "homepage": "https://github.com/UsmanAAV/zet-media-test#readme",
+  "homepage": "https://github.com/UsmanAAV/game-2048-library-functional#readme",
   "jest": {
     "testEnvironment": "node"
   },
