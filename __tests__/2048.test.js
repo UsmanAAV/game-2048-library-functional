@@ -7,42 +7,51 @@ const LEFT = 'left';
 
 const playField1 = [
   [0, 0, 0, 0],
-  [0, 2, 0, 0],
+  [0, 2, 4, 0],
+  [2, 2, 4, 0],
+  [0, 0, 4, 4],
+];
+
+const playField1Left = [
+  [0, 0, 0, 0],
+  [2, 4, 0, 0],
+  [4, 4, 0, 0],
+  [8, 0, 0, 0],
+];
+
+const playField1Up = [
+  [2, 4, 8, 4],
+  [0, 0, 4, 0],
   [0, 0, 0, 0],
   [0, 0, 0, 0],
 ];
 
-const playField1Up = [
-  [0, 2, 0, 0],
+const playField1Right = [
   [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
+  [0, 0, 2, 4],
+  [0, 0, 4, 4],
+  [0, 0, 0, 8],
 ];
 
 const playField1Down = [
   [0, 0, 0, 0],
   [0, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 2, 0, 0],
+  [0, 0, 4, 0],
+  [2, 4, 8, 4],
 ];
 
-const playField1Right = [
-  [0, 0, 0, 0],
-  [0, 0, 0, 2],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-];
+it('move left', () => {
+  expect(movePlayField(playField1, LEFT)).toEqual(playField1Left);
+});
 
-const playField1Left = [
-  [0, 0, 0, 0],
-  [2, 0, 0, 0],
-  [0, 0, 0, 0],
-  [0, 0, 0, 0],
-];
+it('move up', () => {
+  expect(movePlayField(playField1, UP)).toEqual(playField1Up);
+});
 
-test('game1', () => {
-  expect(movePlayField(playField1, UP)).toBe(playField1Up);
-  expect(movePlayField(playField1, DOWN)).toBe(playField1Down);
-  expect(movePlayField(playField1, RIGHT)).toBe(playField1Right);
-  expect(movePlayField(playField1, LEFT)).toBe(playField1Left);
+it('move right', () => {
+  expect(movePlayField(playField1, RIGHT)).toEqual(playField1Right);
+});
+
+it('move down', () => {
+  expect(movePlayField(playField1, DOWN)).toEqual(playField1Down);
 });

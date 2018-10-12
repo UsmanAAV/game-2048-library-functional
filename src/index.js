@@ -1,9 +1,23 @@
-import rotateMatrix from './rotateMatrix';
+import { rotateMatrixClockwise, rotateMatrixCounterClockwise } from './rotateMatrix';
 
-const UP = 'up';
-const DOWN = 'down';
-const RIGHT = 'right';
-const LEFT = 'left';
+const directions = {
+  left: {
+    direction: 'left',
+    count: 0,
+  },
+  down: {
+    direction: 'down',
+    count: 1,
+  },
+  right: {
+    direction: 'right',
+    count: 2,
+  },
+  up: {
+    direction: 'up',
+    count: 3,
+  },
+};
 
 const blankField = [
   [0, 0, 0, 0],
@@ -18,7 +32,7 @@ const map2DimArr = (array, fn) => array.map((curr, i) => (
 
 const getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
 
-const addNumberToPlayField = (playField) => {
+export const addNumberToPlayField = (playField) => {
   const getFreeCells = (field) => {
     const cellsIndexes = map2DimArr(field, (elem, i, j) => [i, j, elem]);
     const flattenCellsIndexes = cellsIndexes.reduce((acc, val) => acc.concat(val), []);
@@ -45,8 +59,31 @@ export const initPlayField = () => {
   return initialPlayField;
 };
 
-export const movePlayField = (playField) => {
-
+export const movePlayField = (playField, direction) => {
+  // rotate field
+  const rotateNTimesClockwise = (array, count) => {
+    if (count <= 0) return array;
+    return rotateNTimesClockwise(rotateMatrixClockwise(array), count - 1);
+  };
+  const rotatedField = rotateNTimesClockwise(playField, directions[direction].count);
+  // move field to LEFT
+  const moveRowToLeft = (array) => {
+    if (array.length < 2) return array;
+    if (array[0] === array[1]) return [array[0] * 2].concat(moveRowToLeft(array.slice(2)));
+    return [array[0]].concat(moveRowToLeft(array.slice(1)));
+  };
+  const movedField = rotatedField.map(curr => moveRowToLeft(curr.filter(e => e !== 0)));
+  const addedZerosField = map2DimArr(blankField, (elem, i, j) => (
+    elem + movedField[i][j] ? movedField[i][j] : 0
+  ));
+  // rotate field back
+  const rotateNTimesCounterClockwise = (array, count) => {
+    if (count <= 0) return array;
+    return rotateNTimesCounterClockwise(rotateMatrixCounterClockwise(array), count - 1);
+  };
+  const result = rotateNTimesCounterClockwise(addedZerosField, directions[direction].count);
+  // return moved field
+  return result;
 };
 
 export const isWin = (playField) => {
@@ -62,7 +99,7 @@ export const isLoss = (playField) => {
     const canMoveAlongI = (i > 0) ? elem === arr[i - 1][j] : false;
     const canMoveAlongJ = (j > 0) ? elem === arr[i][j - 1] : false;
     return canMoveAlongI || canMoveAlongJ;
-  }
+  };
   const isExistsMoves = map2DimArr(playField, canMoveToLeftToUp);
 
   const hasSomeMove = isExistsMoves
