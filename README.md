@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.org/UsmanAAV/game-2048-library-functional.svg?branch=master)](https://travis-ci.org/UsmanAAV/game-2048-library-functional)
+
+[![Maintainability](https://api.codeclimate.com/v1/badges/ba5accc714844b495f96/maintainability)](https://codeclimate.com/github/UsmanAAV/game-2048-library-functional/maintainability)
+
+[![Test Coverage](https://api.codeclimate.com/v1/badges/ba5accc714844b495f96/test_coverage)](https://codeclimate.com/github/UsmanAAV/game-2048-library-functional/test_coverage)
+
 # game 2048 library
 A library based in a functional programming paradigm to creates a 2048 game.
 
