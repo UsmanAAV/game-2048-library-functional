@@ -1,4 +1,4 @@
-import { rotateMatrixClockwise, rotateMatrixCounterClockwise } from './rotateMatrix';
+import { rotateMatrixClockwise, rotateMatrixCounter } from './rotateMatrix';
 
 const directions = {
   left: {
@@ -60,12 +60,7 @@ export const initPlayField = () => {
 };
 
 export const movePlayField = (playField, direction) => {
-  // rotate field
-  const rotateNTimesClockwise = (array, count) => {
-    if (count <= 0) return array;
-    return rotateNTimesClockwise(rotateMatrixClockwise(array), count - 1);
-  };
-  const rotatedField = rotateNTimesClockwise(playField, directions[direction].count);
+  const rotatedField = rotateMatrixClockwise(playField, directions[direction].count);
   // move field to LEFT
   const moveRowToLeft = (array) => {
     if (array.length < 2) return array;
@@ -76,13 +71,7 @@ export const movePlayField = (playField, direction) => {
   const addedZerosField = map2DimArr(blankField, (elem, i, j) => (
     elem + movedField[i][j] ? movedField[i][j] : 0
   ));
-  // rotate field back
-  const rotateNTimesCounterClockwise = (array, count) => {
-    if (count <= 0) return array;
-    return rotateNTimesCounterClockwise(rotateMatrixCounterClockwise(array), count - 1);
-  };
-  const result = rotateNTimesCounterClockwise(addedZerosField, directions[direction].count);
-  // return moved field
+  const result = rotateMatrixCounter(addedZerosField, directions[direction].count);
   return result;
 };
 
