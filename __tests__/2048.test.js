@@ -61,7 +61,7 @@ const playField2 = [
   [0, 0, 0, 0],
   [0, 0, 2, 0],
   [0, 0, 0, 0],
-]
+];
 
 const playField2Left = [
   [0, 0, 0, 0],
