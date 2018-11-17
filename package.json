@@ -1,6 +1,6 @@
 {
   "name": "2048_functional",
-  "version": "0.0.1",
+  "version": "0.1.1",
   "description": "A library based in a functional programming paradigm to creates a 2048 game.",
   "main": "dist/index.js",
   "scripts": {

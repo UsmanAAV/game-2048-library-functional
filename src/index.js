@@ -26,13 +26,15 @@ const blankField = [
   [0, 0, 0, 0],
 ];
 
+const flat = arr => arr.reduce((acc, val) => acc.concat(val), []);
+
 const map2DimArr = (array, fn) => array.map((curr, i) => (
   curr.map((elem, j) => fn(elem, i, j, array))
 ));
 
 const getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
 
-export const addNumberToPlayField = (playField) => {
+const addNumberToPlayField = (playField) => {
   const getFreeCells = (field) => {
     const cellsIndexes = map2DimArr(field, (elem, i, j) => [i, j, elem]);
     const flattenCellsIndexes = cellsIndexes.reduce((acc, val) => acc.concat(val), []);
@@ -54,11 +56,6 @@ export const addNumberToPlayField = (playField) => {
   return result;
 };
 
-export const initPlayField = () => {
-  const initialPlayField = addNumberToPlayField(blankField);
-  return initialPlayField;
-};
-
 export const movePlayField = (playField, direction) => {
   const rotatedField = rotateMatrixClockwise(playField, directions[direction].count);
   // move field to LEFT
@@ -75,12 +72,12 @@ export const movePlayField = (playField, direction) => {
   return result;
 };
 
-export const isWin = (playField) => {
-  const has2048 = playField.reduce((acc, elem) => acc + (elem.includes(2048) ? 1 : 0), 0);
+const isWin = (playField) => {
+  const has2048 = flat(playField).includes(2048);
   return has2048;
 };
 
-export const isLoss = (playField) => {
+const isLoss = (playField) => {
   const hasZeros = playField.reduce((acc, elem) => acc + (elem.includes(0) ? 1 : 0), 0);
   if (hasZeros) return false;
 
@@ -95,4 +92,32 @@ export const isLoss = (playField) => {
     .map(elem => elem.includes(true))
     .includes(true);
   return !hasSomeMove;
+};
+
+const isEqual = (prevField, nextField) => {
+  const prev = flat(prevField);
+  const next = flat(nextField);
+  if (prev.length !== next.length) {
+    return false;
+  }
+  if (prev.every((item, i) => item === next[i])) {
+    return true;
+  }
+  return false;
+};
+
+export const play = ({ prevField, direction, isNewGame }) => {
+  if (isNewGame) {
+    return { prevField: blankField, nextField: addNumberToPlayField(blankField) };
+  }
+  const movedField = movePlayField(prevField, direction);
+  if (isEqual(movedField, prevField)) {
+    return { prevField, nextField: movedField };
+  }
+  const nextField = addNumberToPlayField(movedField);
+  const victory = isWin(nextField);
+  const defeat = isLoss(nextField);
+  return {
+    prevField, nextField, victory, defeat,
+  };
 };
