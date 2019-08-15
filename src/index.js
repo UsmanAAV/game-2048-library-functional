@@ -26,19 +26,19 @@ const blankField = [
   [0, 0, 0, 0],
 ];
 
-const flat = arr => arr.reduce((acc, val) => acc.concat(val), []);
+const flat = (arr) => arr.reduce((acc, val) => acc.concat(val), []);
 
 const map2DimArr = (array, fn) => array.map((curr, i) => (
   curr.map((elem, j) => fn(elem, i, j, array))
 ));
 
-const getRandomInt = max => Math.floor(Math.random() * Math.floor(max));
+const getRandomInt = (max) => Math.floor(Math.random() * Math.floor(max));
 
 const addNumberToPlayField = (playField) => {
   const getFreeCells = (field) => {
     const cellsIndexes = map2DimArr(field, (elem, i, j) => [i, j, elem]);
     const flattenCellsIndexes = cellsIndexes.reduce((acc, val) => acc.concat(val), []);
-    const freeCellsIndexes = flattenCellsIndexes.filter(elem => elem[2] === 0);
+    const freeCellsIndexes = flattenCellsIndexes.filter((elem) => elem[2] === 0);
     return freeCellsIndexes;
   };
 
@@ -64,7 +64,7 @@ export const movePlayField = (playField, direction) => {
     if (array[0] === array[1]) return [array[0] * 2].concat(moveRowToLeft(array.slice(2)));
     return [array[0]].concat(moveRowToLeft(array.slice(1)));
   };
-  const movedField = rotatedField.map(curr => moveRowToLeft(curr.filter(e => e !== 0)));
+  const movedField = rotatedField.map((curr) => moveRowToLeft(curr.filter((e) => e !== 0)));
   const addedZerosField = map2DimArr(blankField, (elem, i, j) => (
     elem + movedField[i][j] ? movedField[i][j] : 0
   ));
@@ -89,7 +89,7 @@ const isLoss = (playField) => {
   const isExistsMoves = map2DimArr(playField, canMoveToLeftToUp);
 
   const hasSomeMove = isExistsMoves
-    .map(elem => elem.includes(true))
+    .map((elem) => elem.includes(true))
     .includes(true);
   return !hasSomeMove;
 };
